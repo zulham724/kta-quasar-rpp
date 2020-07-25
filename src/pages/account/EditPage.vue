@@ -2,34 +2,25 @@
   <q-layout view="hHh Lpr fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-btn
-          color="deep-purple"
-          flat
-          dense
-          icon="arrow_back"
-          @click="$router.back()"
-        />
+        <q-btn color="deep-purple" flat dense icon="arrow_back" @click="$router.back()" />
         <q-toolbar-title>
           <div class="text-body2 text-deep-purple text-bold">Edit Profile</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
     <q-page-container v-if="auth != null">
-      <div class="q-pa-md">
+      <div class="q-pa-lg">
         <div class="row q-pb-md">
           <div class="col-3">
-            <q-avatar size="15vw">
-              <q-img
-                :src="`${Setting.storageUrl}/${Auth.auth.avatar}`"
-                no-default-spinner
-              />
+            <q-avatar size="20vw">
+              <q-img :src="`${Setting.storageUrl}/${Auth.auth.avatar}`" no-default-spinner />
             </q-avatar>
           </div>
-          <div class="col-9 self-center">
-            <div class="text-body2">{{ Auth.auth.name }}</div>
+          <div class="col-9 self-center q-pl-sm">
+            <div class="text-h6">{{ Auth.auth.name }}</div>
           </div>
         </div>
-        <q-form class="q-gutter-sm" ref="form">
+        <q-form ref="form">
           <q-input
             color="deep-purple"
             outlined
@@ -51,6 +42,7 @@
             :rules="[val => (val && val.length > 0) || 'Harus diisi']"
           />
           <q-select
+            class="q-mb-md"
             color="deep-purple"
             v-if="auth.role_id != 7"
             dense

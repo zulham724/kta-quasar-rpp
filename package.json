@@ -1,6 +1,6 @@
 {
     "name": "kta-quasar-rpp",
-    "version": "2.0.1",
+    "version": "2.0.3",
     "description": "RPP DIGITAL",
     "productName": "RPP DIGITAL",
     "cordovaId": "org.agpaiidigital.rpp",
@@ -15,6 +15,7 @@
         "axios": "^0.18.1",
         "compressorjs": "^1.0.6",
         "cropperjs": "^1.5.7",
+        "jquery": "^3.5.1",
         "moment": "^2.26.0",
         "qrcode": "^1.4.4",
         "quasar": "^1.0.0",
@@ -24,6 +25,7 @@
         "vue-moment": "^4.1.0",
         "vue-read-more-smooth": "^0.1.8",
         "vue-router-multiguard": "^1.0.3",
+        "vue-slick": "^1.1.15",
         "vue-virtual-scroller": "^1.0.10",
         "vue-zoomer": "^0.3.6",
         "vuex-persist": "^2.2.0"

@@ -2,54 +2,62 @@
   <q-layout view="hHh Lpr fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-btn
-          color="deep-purple"
-          flat
-          dense
-          icon="arrow_back"
-          @click="$router.back()"
-        />
+        <q-btn color="deep-purple" flat dense icon="arrow_back" @click="$router.back()" />
         <q-toolbar-title>
-          <div class="text-body2 text-deep-purple text-bold">
-            Informasi
-          </div>
+          <div class="text-body2 text-deep-purple text-bold">Informasi</div>
         </q-toolbar-title>
         <q-space />
       </q-toolbar>
     </q-header>
+    <a></a>
     <q-page-container>
       <q-list bordered padding class="rounded-borders">
-        <q-item>
+        <q-item class="bg-deep-purple-9">
           <q-item-section>
-            <q-item-label lines="1">Jumlah Guru di RPP Digital</q-item-label>
+            <q-item-label class="text-deep-purple-2" lines="1">
+              <div>
+                <span class="text-h3 material-icons">person</span>
+              </div>Jumlah Guru di RPP Digital
+            </q-item-label>
           </q-item-section>
 
           <q-item-section side>
-            <q-item-label lines="2"
-              >{{LessonPlan.information.users_count || 0}}</q-item-label
-            >
+            <q-item-label
+              class="text-h4 text-deep-purple-3 text-bold"
+              lines="2"
+            >{{LessonPlan.information.users_count || 0}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item>
+        <q-item class="bg-deep-purple-2">
           <q-item-section>
-            <q-item-label lines="1">Jumlah RPP</q-item-label>
+            <q-item-label class="text-deep-purple-9" lines="1">
+              <div>
+                <span class="text-h3 material-icons">menu_book</span>
+              </div>Jumlah RPP
+            </q-item-label>
           </q-item-section>
 
           <q-item-section side>
-            <q-item-label lines="2"
-              >{{LessonPlan.information.lesson_plans_count || 0}}</q-item-label
-            >
+            <q-item-label
+              class="text-h4 text-deep-purple-9 text-bold"
+              lines="2"
+            >{{LessonPlan.information.lesson_plans_count || 0}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item>
+        <q-item class="bg-deep-purple-9">
           <q-item-section>
-            <q-item-label lines="1">Jumlah Pengawas</q-item-label>
+            <q-item-label class="text-deep-purple-2" lines="1">
+              <div>
+                <span class="text-h3 material-icons">supervised_user_circle</span>
+              </div>Jumlah Pengawas
+            </q-item-label>
           </q-item-section>
 
           <q-item-section side>
-            <q-item-label lines="2"
-              >{{LessonPlan.information.observers_count || 0}}</q-item-label
-            >
+            <q-item-label
+              class="text-h4 text-deep-purple-3 text-bold"
+              lines="2"
+            >{{LessonPlan.information.observers_count || 0}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -67,8 +75,8 @@ export default {
     };
   },
   mounted() {
-    this.getDetailTotalMember()
-    this.getInformation()
+    this.getDetailTotalMember();
+    this.getInformation();
     if (this.provinces.length == 0) {
       this.loading = true;
       this.getProvinces().finally(() => {
@@ -77,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["Setting", "Auth",'LessonPlan'])
+    ...mapState(["Setting", "Auth", "LessonPlan"])
   },
   methods: {
     getProvinces() {
@@ -103,8 +111,8 @@ export default {
     getDetailTotalMember() {
       this.$store.dispatch("Setting/getCountUser");
     },
-    getInformation(){
-        this.$store.dispatch('LessonPlan/getInformation')
+    getInformation() {
+      this.$store.dispatch("LessonPlan/getInformation");
     }
   }
 };

@@ -6,17 +6,23 @@
         <q-toolbar-title>
           <div class="text-body2 text-deep-purple text-bold">Home</div>
         </q-toolbar-title>
-        <q-btn round flat icon="help_outline" color="deep-purple" @click="$router.push('/information')" />
+        <q-btn
+          round
+          flat
+          icon="help_outline"
+          color="deep-purple"
+          @click="$router.push('/information')"
+        />
       </q-toolbar>
     </q-header>
-    <q-page>
+    <q-page class="bg-deep-purple-1 q-pa-sm">
       <q-pull-to-refresh @refresh="onRefresh" color="deep-purple">
         <q-infinite-scroll @load="onLoad" :offset="250">
           <q-intersection
             v-for="lessonplan in LessonPlan.items.data"
             :key="lessonplan.id"
             :style="
-            `min-height: 80vh;width: 100vw`"
+            `min-height: 80vh;`"
           >
             <item-component :lessonplan="{...lessonplan}"></item-component>
           </q-intersection>
@@ -52,12 +58,14 @@ export default {
         done();
       });
     },
-    onLoad(index,done) {
+    onLoad(index, done) {
       this.LessonPlan.items.next_page_url
-        ? this.$store.dispatch("LessonPlan/next",this.LessonPlan.items.next_page_url).then(res => {
-          this.$store.commit('LessonPlan/next',{items:res.data})
-          done()
-        })
+        ? this.$store
+            .dispatch("LessonPlan/next", this.LessonPlan.items.next_page_url)
+            .then(res => {
+              this.$store.commit("LessonPlan/next", { items: res.data });
+              done();
+            })
         : done();
     }
   }

@@ -1,27 +1,19 @@
 <template>
   <div style="width:100%">
-    <q-card v-if="lessonplan != null">
+    <q-card class="q-mb-sm" v-if="lessonplan != null">
       <q-card-section style="padding-bottom:0">
         <div class="row">
           <div class="col-2 self-center">
-            <q-avatar
-              size="lg"
-              @click="$router.push(`/user/profile/${lessonplan.user.id}`)"
-            >
-              <q-img
-                :src="`${Setting.storageUrl}/${lessonplan.user.avatar}`"
-                no-default-spinner
-              />
+            <q-avatar size="xl" @click="$router.push(`/user/profile/${lessonplan.user.id}`)">
+              <q-img :src="`${Setting.storageUrl}/${lessonplan.user.avatar}`" no-default-spinner />
             </q-avatar>
           </div>
           <div class="col-8 self-center">
             <div class="row">
               <div
-                class="text-bold text-caption"
+                class="text-bold text-body1 text-weight-bold"
                 @click="$router.push(`/user/profile/${lessonplan.user.id}`)"
-              >
-                {{ lessonplan.user.name }}
-              </div>
+              >{{ lessonplan.user.name }}</div>
             </div>
           </div>
           <div class="col-2 self-center">
@@ -43,7 +35,7 @@
         <div class="row">
           <div class="col-12">
             <div
-              class="text-caption"
+              class="text-body2 q-pb-sm"
               style="overflow-wrap:break-word; white-space:pre-line"
               v-html="
                 lessonplan.description.length > 100
@@ -58,9 +50,7 @@
               v-if="lessonplan.description.length > 100 && isReadMore == false"
               @click="$router.push(`/lessonplan/${lessonplan.id}/comment`)"
               class="text-caption text-grey"
-            >
-              Readmore
-            </div>
+            >Readmore</div>
           </div>
         </div>
       </q-card-section>
@@ -77,23 +67,17 @@
               v-if="lessonplan.user.id == Auth.auth.id"
             >
               <div v-if="lessonplan.ratings_value_count">
-                <q-icon
-                  name="star"
-                  size="sm"
-                  color="deep-purple"
-                ></q-icon>
-                <div class="text-caption text-deep-purple">{{ lessonplan.ratings_value_count/lessonplan.ratings.length }}</div>
+                <q-icon name="star" size="sm" color="deep-purple"></q-icon>
+                <div
+                  class="text-caption text-deep-purple"
+                >{{ lessonplan.ratings_value_count/lessonplan.ratings.length }}</div>
               </div>
             </div>
             <div class="row justify-center full-height">
               <div class="col-4 text-center self-center">
                 <div class="text-caption">{{ lessonplan.topic }}</div>
-                <div class="text-caption">
-                  Kelas {{ lessonplan.grade.description }}
-                </div>
-                <div class="text-caption q-pt-md">
-                  Oleh {{ lessonplan.user.name }}
-                </div>
+                <div class="text-caption">Kelas {{ lessonplan.grade.description }}</div>
+                <div class="text-caption q-pt-md">Oleh {{ lessonplan.user.name }}</div>
               </div>
             </div>
           </div>
@@ -107,15 +91,10 @@
                 class="text-caption text-bold"
                 v-show="lessonplan.likes_count"
                 @click="$router.push(`/lessonplan/like/${lessonplan.id}`)"
-              >
-                {{ lessonplan.likes_count }} Suka
-              </div>
+              >{{ lessonplan.likes_count }} Suka</div>
             </div>
           </div>
-          <div
-            v-if="Auth.auth.role_id === 7"
-            class="col self-center"
-          >
+          <div v-if="Auth.auth.role_id === 7" class="col self-center">
             <q-rating
               v-if="
               Auth.auth.profile.city_id
@@ -132,6 +111,9 @@
           </div>
           <div class="col">
             <div class="row justify-end">
+              <div v-show="lessonplan.is_lock === 0">
+                <q-btn flat round icon="edit" @click="duplicate()" />
+              </div>
               <q-btn
                 flat
                 round
@@ -171,14 +153,12 @@
             @click="$router.push(`/lessonplan/${lessonplan.id}/comment`)"
           >
             {{
-              lessonplan.comments.length
-                ? `Lihat Semua ${lessonplan.comments.length} Komentar`
-                : "Lihat Komentar"
+            lessonplan.comments.length
+            ? `Lihat Semua ${lessonplan.comments.length} Komentar`
+            : "Lihat Komentar"
             }}
           </div>
-          <div class="text-caption text-grey">
-            {{ lessonplan.created_at | moment("from", "now") }}
-          </div>
+          <div class="text-caption text-grey">{{ lessonplan.created_at | moment("from", "now") }}</div>
         </div>
       </q-card-section>
     </q-card>
@@ -200,7 +180,8 @@ export default {
     return {
       slide: 0,
       isReadMore: false,
-      dialog: false
+      dialog: false,
+      lessonplan_duplicate: {}
     };
   },
   created() {
@@ -211,6 +192,33 @@ export default {
       : (this.lessonplan.rated_value_count = 0);
   },
   methods: {
+    duplicate() {
+      this.$q
+        .dialog({
+          title: "Konten untuk Postingan Ini",
+          prompt: {
+            model: "",
+            type: "text" // optional
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          this.lessonplan_duplicate = this.lessonplan;
+          this.lessonplan_duplicate.user = this.Auth.auth;
+          this.lessonplan_duplicate.id = null;
+          this.lessonplan_duplicate.user_id = this.Auth.auth.id;
+          this.lessonplan_duplicate.description = data;
+          this.$store
+            .dispatch("LessonPlan/duplicate", this.lessonplan_duplicate)
+            .then(res => {
+              this.$q.notify("RPP Berhasil Terduplikat");
+            })
+            .catch(err => {
+              this.$q.notify("Terjadi kesalahan");
+            });
+        });
+    },
     openLessonPlan() {
       this.$router.push({
         name: "lessonplan",
@@ -308,22 +316,22 @@ export default {
                   color: "deep-purple",
                   id: "destroy"
                 }
-              : false,
+              : false
           ]
         })
         .onOk(action => {
           // console.log('Action chosen:', action.id)
-          if(action.id == 'edit'){
-            this.$router.push(`/lessonplan/${this.lessonplan.id}/edit`)
+          if (action.id == "edit") {
+            this.$router.push(`/lessonplan/${this.lessonplan.id}/edit`);
           }
-          if(action.id == 'download'){
-            this.download()
+          if (action.id == "download") {
+            this.download();
           }
           if (action.id == "destroy") {
             this.destroy();
           }
-          if(action.id == 'observer'){
-            this.$router.push(`/lessonplan/${this.lessonplan.id}/observer`)
+          if (action.id == "observer") {
+            this.$router.push(`/lessonplan/${this.lessonplan.id}/observer`);
           }
         })
         .onCancel(() => {
@@ -333,8 +341,12 @@ export default {
           // console.log('I am triggered on both OK and Cancel')
         });
     },
-    download(){
-      let ref = cordova.InAppBrowser.open(`${this.Setting.url}/api/v1/lessonplans/download/${this.lessonplan.id}`,'_system','location=no,zoom=no')
+    download() {
+      let ref = cordova.InAppBrowser.open(
+        `${this.Setting.url}/api/v1/lessonplans/download/${this.lessonplan.id}`,
+        "_system",
+        "location=no,zoom=no"
+      );
     }
   }
 };

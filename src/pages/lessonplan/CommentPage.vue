@@ -2,13 +2,7 @@
   <q-layout view="hHh Lpr fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-btn
-          color="deep-purple"
-          flat
-          dense
-          icon="arrow_back"
-          @click="$router.back()"
-        />
+        <q-btn color="deep-purple" flat dense icon="arrow_back" @click="$router.back()" />
         <q-toolbar-title>
           <div class="text-body2 text-deep-purple text-bold">Komentar</div>
         </q-toolbar-title>
@@ -16,70 +10,59 @@
     </q-header>
 
     <q-page-container v-if="lessonplan != null">
-      <div class="q-pa-md">
+      <div class="q-px-md q-py-md">
         <div class="row q-pb-md">
           <div class="col-2 self-center">
             <q-avatar>
-              <q-img
-                :src="`${Setting.storageUrl}/${lessonplan.user.avatar}`"
-                no-default-spinner
-              />
+              <q-img :src="`${Setting.storageUrl}/${lessonplan.user.avatar}`" no-default-spinner />
             </q-avatar>
           </div>
           <div class="col-10 self-center">
-            <div class="q-pl-md text-caption text-black text-bold">
-              {{ lessonplan.user.name }}
-            </div>
+            <div class="q-pl-sm text-body1 text-black text-bold">{{ lessonplan.user.name }}</div>
+            <div
+              class="q-pl-sm text-caption text-grey"
+            >{{ lessonplan.created_at | moment("from", "now") }}</div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-12">
             <div
-              class="text-caption"
+              class="text-body2"
               style="overflow-wrap:break-word; white-space:pre-line"
               v-html="lessonplan.description"
               v-linkified
             ></div>
           </div>
         </div>
-        <div class="row justify-start q-pt-md">
-          <div class="text-caption text-grey">
-            {{ lessonplan.created_at | moment("from", "now") }}
-          </div>
-        </div>
+        <!-- <div class="row justify-start q-pt-md"></div> -->
       </div>
-      <q-list bordered class="rounded-borders">
-        <q-item-label header>Komentar</q-item-label>
+      <q-separator />
+      <q-list class="rounded-borders q-pt-sm">
+        <!-- <q-item-label header>Komentar</q-item-label> -->
 
-        <item-component
-          v-for="comment in lessonplan.comments"
-          :key="comment.id"
-          :comment="comment"
-        ></item-component>
+        <item-component v-for="comment in lessonplan.comments" :key="comment.id" :comment="comment"></item-component>
       </q-list>
     </q-page-container>
 
-    <q-footer style="padding:5px;background-color:white">
+    <q-footer style="padding:10px;background-color:#d1c4e9; max-height:500px;">
       <q-input
         dense
+        rounded
+        outlined
+        clearable
+        autogrow
+        type="textarea"
         label="Tulis sesuatu"
         v-model="comment.value"
-        flat
-        borderless
         color="deep-purple"
         bg-color="white"
         ref="keyboard"
+        rows="3"
       >
         <template v-slot:after>
           <div>
-            <q-btn
-              flat
-              round
-              icon="send"
-              :loading="loading"
-              :disable="loading"
-              @click="store()"
-            />
+            <q-btn flat round icon="send" :loading="loading" :disable="loading" @click="store()" />
           </div>
         </template>
       </q-input>
