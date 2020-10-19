@@ -33,6 +33,10 @@ const mutations = {
   },
   setInformation(state, payload) {
     state.information = payload.information;
+  },
+  setCoverImage(state, payload){
+      let index=state.items.data.findIndex(e=>e.id==payload.lesson_plan_id);
+      state.items.data[index].cover.image=payload.image;
   }
 };
 
@@ -235,7 +239,8 @@ const actions = {
           reject(err);
         });
     });
-  }
+  },
+  
 };
 
 const getters = {};
