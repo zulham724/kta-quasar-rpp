@@ -35,8 +35,10 @@ const mutations = {
     state.information = payload.information;
   },
   setCoverImage(state, payload){
+    if(state.items.data){
       let index=state.items.data.findIndex(e=>e.id==payload.lesson_plan_id);
-      state.items.data[index].cover.image=payload.image;
+      if(index>-1)state.items.data[index].cover.image=payload.image;
+    }
   }
 };
 

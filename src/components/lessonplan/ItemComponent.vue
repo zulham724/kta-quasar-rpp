@@ -38,8 +38,8 @@
 
             <div style="min-height:100vw;min-width:100vw">
                 <q-skeleton size="100%" style="position:absolute;z-index:1" />
-                <div class="bg-grey row justify-center" style="width:100%;height:100%;position:absolute;z-index:2" v-if="!imageLoaded">
-                    <div class="self-center" @click="()=>{useDefaultImage=true}">Image couldn't be Loaded.</div>
+                <div @click="()=>{useDefaultImage=true}" v-ripple:white class="bg-grey row justify-center" style="width:100%;height:100%;position:absolute;z-index:2" v-if="!imageLoaded">
+                    <div class="self-center">Image couldn't be Loaded.</div>
                 </div>
                 <q-img @error="imgError" style="z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
                     <div class="q-pa-md full-height full-width">
@@ -119,13 +119,17 @@ import {
 
 export default {
     props: {
-        lessonplan: null
+        lessonplan: null,
+        isSelf: false,
     },
     components: {},
     computed: {
         ...mapState(["Setting", "Auth"]),
         lessonPlanImage: function () {
             if (!this.imageLoaded && this.useDefaultImage) {
+                if (this.isSelf) {
+                    this.lessonplan.cover.image = this.defaultImage;
+                }
                 this.$store.commit("LessonPlan/setCoverImage", {
                     lesson_plan_id: this.lessonplan.id,
                     image: this.defaultImage
