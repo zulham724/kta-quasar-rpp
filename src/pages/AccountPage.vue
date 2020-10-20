@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="row justify-start align-center">
-                                <q-avatar size="27vw" @click="zoom(Auth.auth.avatar)">
+                                <q-avatar :size="avatarSize" @click="zoom(Auth.auth.avatar)">
                                     <q-img :src="`${Setting.storageUrl}/${Auth.auth.avatar}`" no-default-spinner />
                                 </q-avatar>
                             </div>
@@ -129,7 +129,10 @@ export default {
         ItemComponent: () => import("components/lessonplan/account/ItemComponent.vue")
     },
     computed: {
-        ...mapState(["Auth", "Setting"])
+        ...mapState(["Auth", "Setting"]),
+        avatarSize() {
+            return this.$q.platform.is.mobile ? '27vw' : '150px'
+        }
     },
     created() {
         this.onRefresh();

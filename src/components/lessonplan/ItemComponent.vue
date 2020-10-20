@@ -36,12 +36,12 @@
         </q-card-section>
         <q-card-section class="q-pa-none">
 
-            <div style="min-height:100vw;min-width:100vw">
+            <div :style="`min-height:${minHeight};min-width:100%;`">
                 <q-skeleton size="100%" style="position:absolute;z-index:1" />
                 <div @click="()=>{useDefaultImage=true}" v-ripple:white class="bg-grey row justify-center" style="width:100%;height:100%;position:absolute;z-index:2" v-if="!imageLoaded">
                     <div class="self-center">Image couldn't be Loaded.</div>
                 </div>
-                <q-img @error="imgError" style="z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
+                <q-img @load="loaded" @error="imgError" style="position:relative;z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
                     <div class="q-pa-md full-height full-width">
                         <div class="row" style="position:absolute;right:5%" v-if="lessonplan.user.id == Auth.auth.id">
                             <div v-if="lessonplan.ratings_value_count">
@@ -138,6 +138,9 @@ export default {
             } else {
                 return `${this.Setting.storageUrl}/${this.lessonplan.cover.image}`;
             }
+        },
+        minHeight: function () {
+            return this.$q.platform.is.mobile ? '80vw' : '30vw';
         }
     },
     data() {
@@ -149,6 +152,7 @@ export default {
             defaultImage: 'templates/October2020/UfVdGqHQYyZW3lq7TWye.png',
             lessonplan_duplicate: {},
             useDefaultImage: false,
+            srcSuccess: false
         };
     },
     created() {

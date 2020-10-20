@@ -10,7 +10,7 @@
     </q-header>
     <q-page v-if="user">
         <q-intersection v-for="lessonplan in user.lesson_plans" :key="lessonplan.id" :style="
-        `min-height: 80vh;width: 100vw`" :id="`item${lessonplan.id}`">
+        `min-height: 80vh;`" :id="`item${lessonplan.id}`">
             <item-component :isSelf="true" :lessonplan="lessonplan"></item-component>
         </q-intersection>
     </q-page>
