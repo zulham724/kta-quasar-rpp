@@ -41,7 +41,7 @@
                 <div @click="()=>{useDefaultImage=true}" v-ripple:white class="bg-grey row justify-center" style="width:100%;height:100%;position:absolute;z-index:2" v-if="!imageLoaded">
                     <div class="self-center">Image couldn't be Loaded.</div>
                 </div>
-                <q-img @load="loaded" @error="imgError" style="position:relative;z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
+                <q-img @error="imgError" style="position:relative;z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
                     <div class="q-pa-md full-height full-width">
                         <div class="row" style="position:absolute;right:5%" v-if="lessonplan.user.id == Auth.auth.id">
                             <div v-if="lessonplan.ratings_value_count">

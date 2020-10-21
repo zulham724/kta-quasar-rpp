@@ -1,6 +1,6 @@
 <template>
 <div>
-    <q-card class="mycard" @click="$router.push(`/user/lessonplanlist/${Auth.auth.id}/${lessonplan.id}`)">
+    <q-card class="mycard" @click="$router.push(`/user/lessonplanlist/${lessonplan.user.id}/${lessonplan.id}`)">
         <q-card-section>
             <div style="height:200px" class="row justify-center">
                 <q-skeleton width="100%" height="100%" style="position:relative;z-index:1" v-if="imageLoaded" />
@@ -25,7 +25,7 @@ import {
 } from "vuex";
 export default {
     props: {
-        lessonplan: {}
+        lessonplan: {},
     },
     data() {
         return {

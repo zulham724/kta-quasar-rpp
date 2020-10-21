@@ -110,7 +110,22 @@ const routes = [
         component: () =>
           import("pages/observer/follow/lessonplan/ListPage.vue"),
         props: true
-      }
+      },
+      {
+        path: "/lessonplan/like/:lessonPlanId",
+        name: "lessonplanid",
+        component: () =>
+            import ("pages/lessonplan/LikePage.vue"),
+        props: true
+      },
+      {
+        path: "/lessonplan/comment/like/:commentId",
+        name: "lessonplancommentlike",
+        //beforeEnter: multiguard([auth, actived, check_teacher_status]),
+        component: () =>
+            import ("pages/lessonplan/comment/LikePage.vue"),
+        props: true
+      },
     ]
   },
   {
