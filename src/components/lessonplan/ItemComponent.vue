@@ -42,7 +42,7 @@
                     <div class="self-center">Image couldn't be Loaded.</div>
                 </div>
                 <q-img @error="imgError" style="position:relative;z-index:3" no-default-spinner :src="lessonPlanImage" @click="openLessonPlan()">
-                    <div class="q-pa-md full-height full-width">
+                    <div class="q-pa-md full-height full-width" v-if="!lessonplan.template">
                         <div class="row" style="position:absolute;right:5%" v-if="lessonplan.user.id == Auth.auth.id">
                             <div v-if="lessonplan.ratings_value_count">
                                 <q-icon name="star" size="sm" color="deep-purple"></q-icon>
@@ -116,6 +116,7 @@
 import {
     mapState
 } from "vuex";
+import { openURL } from 'quasar'
 
 export default {
     props: {
@@ -136,7 +137,8 @@ export default {
                 });
                 return `${this.Setting.storageUrl}/${this.defaultImage}`;
             } else {
-                return `${this.Setting.storageUrl}/${this.lessonplan.cover.image}`;
+                const image = this.lessonplan.template? this.lessonplan.template.image:this.lessonplan.cover.image;
+                return `${this.Setting.storageUrl}/${image}`;
             }
         },
         minHeight: function () {
@@ -312,11 +314,16 @@ export default {
                 });
         },
         download() {
-            let ref = cordova.InAppBrowser.open(
-                `${this.Setting.url}/api/v1/lessonplans/download/${this.lessonplan.id}`,
-                "_system",
-                "location=no,zoom=no"
-            );
+            if(this.$q.platform.is.mobile){
+                let ref = cordova.InAppBrowser.open(
+                                `${this.Setting.url}/api/v1/lessonplans/download/${this.lessonplan.id}`,
+                                "_system",
+                                "location=no,zoom=no"
+                );
+            }else{
+                openURL(`${this.Setting.url}/api/v1/lessonplans/download/${this.lessonplan.id}`)
+            }
+           
         }
     }
 };

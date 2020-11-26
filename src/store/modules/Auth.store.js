@@ -133,7 +133,16 @@ const actions = {
                     access
                 )
                 .then(res => {
-                    commit("setProfile", { profile: res.data.profile });
+                    let profile=res.data.profile;
+                    profile.educational_level = user.profile.educational_level;
+
+                    commit("setProfile", { profile: profile});
+
+                    if(profile.educational_level_id!==user.profile.educational_level_id){
+                        commit("LessonPlanDraft/setGradeId",{grade_id:null},{root:true});
+                        commit("LessonPlanDraft/setContents",{contents:[]},{root:true});
+                        commit("Grade/reset",null,{root:true});
+                    }
                     resolve(res);
                 })
                 .catch(err => {

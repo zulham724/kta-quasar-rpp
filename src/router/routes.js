@@ -56,7 +56,22 @@ const routes = [{
         beforeEnter: multiguard([auth, isTrial]),
         component: () =>
             import ("layouts/MainLayout.vue"),
-        children: [{
+        children: [
+            {
+                path: "/editcoverdesign",
+                name: "editcoverdesign",
+                beforeEnter: multiguard([auth]),
+                component: () => import("pages/lessonplan/CoverEditPage.vue"),
+                props:true,
+              },
+              {
+                path: "/edit/editcoverdesign",
+                name: "editcoverdesignedit",
+                beforeEnter: multiguard([auth]),
+                component: () => import("pages/lessonplan/edit/CoverEditPage.vue"),
+                props:true,
+              },
+            {
                 path: "/",
                 component: () =>
                     import ("pages/HomePage.vue")

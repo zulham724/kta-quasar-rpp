@@ -10,8 +10,7 @@
                 <!--<div v-ripple:white class="bg-grey row justify-center text-center" style="width:40vw;height:40vw;position:absolute;z-index:2">
                                                 <div class="self-center">Image couldn't be Loaded.</div>
                                             </div>-->
-                <q-img @error="imgError" style="z-index:3;position:absolute;" :src="lessonplan.cover == null ? `https://cdn.qubicle.id/images/2019/02/15/be26ee32-34a8-407a-a712-3a3e61cdaff8.jpg`
-                    :`${Setting.storageUrl}/${lessonplan.cover.image}`"></q-img>
+                <q-img @error="imgError" style="z-index:3;position:absolute;" :src="lessonPlanImage"></q-img>
             </div>
             <div class="text-body1">{{ lessonplan.topic }}</div>
         </q-card-section>
@@ -35,6 +34,10 @@ export default {
     },
     computed: {
         ...mapState(["Auth", "Setting"]),
+        lessonPlanImage:function(){
+            return  this.lessonplan.template? `${this.Setting.storageUrl}/${this.lessonplan.template.image}`: this.lessonplan.cover == null ? `https://cdn.qubicle.id/images/2019/02/15/be26ee32-34a8-407a-a712-3a3e61cdaff8.jpg`
+                    :`${this.Setting.storageUrl}/${this.lessonplan.cover.image}`
+        }
 
     },
     methods: {

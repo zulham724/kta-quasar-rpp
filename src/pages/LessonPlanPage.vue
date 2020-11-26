@@ -15,8 +15,7 @@
           <q-img
             class="col-5"
             style="border-radius:10px;"
-            :src="lessonplan.cover == null ? `https://cdn.qubicle.id/images/2019/02/15/be26ee32-34a8-407a-a712-3a3e61cdaff8.jpg`
-                    :`${Setting.storageUrl}/${lessonplan.cover.image}`"
+            :src="lessonPlanImage"
           ></q-img>
           <div class="col-7 q-px-sm">
             <div class="text-deep-purple-3 text-body2">Kelas</div>
@@ -33,7 +32,7 @@
           <div class="row items-center q-py-sm">
             <div class="col-3">Dibuat Oleh</div>
             <div class="col-1">:</div>
-            <div class="col-8">{{this.creator.name}}</div>
+            <div class="col-8">{{creator?creator.name:''}}</div>
             <div class="col-3">Disunting Oleh</div>
             <div class="col-1">:</div>
             <div class="col-8">{{lessonplan.user.name}}</div>
@@ -76,7 +75,11 @@ export default {
     this.init();
   },
   computed: {
-    ...mapState(["Setting", "Auth"])
+    ...mapState(["Setting", "Auth"]),
+     lessonPlanImage:function(){
+            return  this.lessonplan.template? `${this.Setting.storageUrl}/${this.lessonplan.template.image}`: this.lessonplan.cover == null ? `https://cdn.qubicle.id/images/2019/02/15/be26ee32-34a8-407a-a712-3a3e61cdaff8.jpg`
+                    :`${this.Setting.storageUrl}/${this.lessonplan.cover.image}`
+        }
   },
   methods: {
     init() {

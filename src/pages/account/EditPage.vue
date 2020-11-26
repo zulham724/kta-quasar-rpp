@@ -49,8 +49,9 @@
             rounded
             outlined
             :options="educationallevels"
-            :option-value="item => item.id"
-            :option-label="item => item.name"
+            option-value="id"
+            option-label="name"
+            :loading="loadingEducational"
             label="Jenjang pendidikan yang diajar"
             v-model="auth.profile.educational_level"
             @input="item => (auth.profile.educational_level_id = item.id)"
@@ -106,6 +107,7 @@ export default {
       cities: [],
       districts: [],
       loading: false,
+      loadingEducational:false,
       file: null,
       isDisabled: true
     };
@@ -162,8 +164,8 @@ export default {
           this.$store
             .dispatch("Auth/updateProfile", this.auth)
             .then(res => {
-              this.$q.notify("Berhasil update profile");
               this.$router.back();
+              this.$q.notify("Berhasil update profile");
             })
             .finally(() => {
               this.loading = false;
@@ -172,8 +174,10 @@ export default {
       });
     },
     getEducationalLevels() {
+      this.loadingEducational=true;
       this.$store.dispatch("EducationalLevel/index").then(res => {
         this.educationallevels = res.data;
+        this.loadingEducational=false;
       });
     },
     getProvinces() {

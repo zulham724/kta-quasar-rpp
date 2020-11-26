@@ -15,7 +15,7 @@
     <q-page class="bg-deep-purple-1 q-pa-sm">
         <q-infinite-scroll @load="onLoad" :offset="250">
             <q-intersection v-for="lessonplan in lessonplans.data" :key="lessonplan.id" :style="
-            `min-height: 85vh`">
+            `min-height: 80vh`">
                 <item-component :isSelf="true" :lessonplan="lessonplan"></item-component>
             </q-intersection>
             <template v-slot:loading>

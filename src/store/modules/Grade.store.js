@@ -6,6 +6,9 @@ const state = {
 const mutations = {
     set(state, payload) {
         state.items = payload.items;
+    },
+    reset(state){
+        state.items=[];
     }
 };
 
@@ -24,7 +27,7 @@ const actions = {
                     reject(err);
                 });
         });
-    }
+    },
 };
 
 const getters = {};
