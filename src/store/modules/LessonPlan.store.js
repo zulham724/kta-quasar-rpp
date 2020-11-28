@@ -39,6 +39,12 @@ const mutations = {
       let index=state.items.data.findIndex(e=>e.id==payload.lesson_plan_id);
       if(index>-1)state.items.data[index].cover.image=payload.image;
     }
+  },
+  setLessonPlan(state, payload){
+    const index=state.items.data.findIndex(e=>e.id==payload.lessonplan.id);
+    if(index>-1){
+      state.items.data[index] = payload.lessonplan;
+    }
   }
 };
 
@@ -245,7 +251,11 @@ const actions = {
   
 };
 
-const getters = {};
+const getters = {
+  lessonplans:state=>{
+    return state.items.data
+  }
+};
 
 export default {
   namespaced: true,

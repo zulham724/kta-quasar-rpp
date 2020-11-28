@@ -6,14 +6,21 @@ const state = {
     auth: null,
     client_id: 2,
     client_secret: "RM0SqcmpoatgzQ5JXi6aeEXYI6dSaPiWDSbTW79s",
-    token: {}
+    token: {},
+    is_unauthorized:false,
+
 };
 
 // Mutations
 const mutations = {
+    setUnauthorized(state, is_unauthorized){
+        state.is_unauthorized=is_unauthorized;
+    },
     auth_success(state, payload) {
         state.token = payload.token;
         state.auth = payload.auth;
+        state.is_unauthorized = false;
+
     },
     setAuth(state, payload) {
         state.auth = payload.auth;
@@ -99,7 +106,15 @@ const actions = {
     },
     logout({ commit }) {
         return new Promise((resolve, reject) => {
+            const user_id=state.auth.id;
+            const channel='notification.'+user_id;
+            console.log('leaving channel: '+channel);
+            if(window.Echo){
+                window.Echo.leave(channel);
+                window.Echo=null;
+            }
             commit("logout");
+            commit("EchoNotification/deleteItems",null,{root:true});
             delete axios.defaults.headers.common.Authorization;
             resolve();
         });
@@ -155,6 +170,7 @@ const actions = {
 // Getter functions
 const getters = {
     isLoggedIn: state => !!state.token.access_token,
+    isUnAuthorized: state=>state.is_unauthorized,
     auth: state => state.auth,
     token: state => state.token
 };

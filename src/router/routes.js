@@ -5,8 +5,10 @@ import { Notify } from "quasar";
 
 // cek auth apakah sudah login atau belum
 const auth = function(to, from, next) {
-    if (store().getters["Auth/isLoggedIn"]) {
-        next();
+    let isLoggedIn = store().getters["Auth/isLoggedIn"];
+  let isUnAuthorized = store().getters["Auth/isUnAuthorized"];
+  if (isLoggedIn && !isUnAuthorized) {
+    next();
     } else {
         next("/login");
     }
@@ -79,6 +81,7 @@ const routes = [{
             {
                 path: "/create",
                 name: "create",
+                beforeEnter: multiguard([auth]),
                 component: () =>
                     import ("pages/CreatePage.vue")
             },
@@ -91,6 +94,7 @@ const routes = [{
             {
                 path: "/account",
                 name: "account",
+                beforeEnter: multiguard([auth]),
                 component: () =>
                     import ("pages/AccountPage.vue")
             },
@@ -111,6 +115,7 @@ const routes = [{
             {
                 path: "/user/profile/:userId",
                 name: "userprofile",
+                beforeEnter: multiguard([auth]),
                 component: () =>
                     import ("pages/user/ProfilePage.vue"),
                 props: true
@@ -127,7 +132,13 @@ const routes = [{
                 component: () =>
                     import ("pages/observer/follow/lessonplan/ListPage.vue"),
                 props: true
-            }
+            },
+            {
+                path: "/announcement",
+                beforeEnter: multiguard([auth]),
+                component: () =>
+                    import ("pages/AnnouncementPage.vue")
+            }     
         ]
     },
     {
@@ -193,7 +204,23 @@ const routes = [{
         name: "information",
         component: () =>
             import ("pages/InformationPage.vue")
-    }
+    },
+    {
+        path: "/lessonplan/like/:lessonPlanId",
+        name: "lessonplanlike",
+        beforeEnter: multiguard([auth]),
+        component: () =>
+            import ("pages/lessonplan/LikePage.vue"),
+        props: true
+    },
+    {
+        path: "/lessonplan/comment/like/:commentId",
+        name: "lessonplancommentlike",
+        beforeEnter: multiguard([auth]),
+        component: () =>
+            import ("pages/lessonplan/comment/LikePage.vue"),
+        props: true
+    },
 ];
 
 // Always leave this as last one

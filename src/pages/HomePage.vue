@@ -7,6 +7,7 @@
                 <div class="text-body2 text-deep-purple text-bold">Home</div>
             </q-toolbar-title>
             <q-btn round flat icon="help_outline" color="deep-purple" @click="$router.push('/information')" />
+             <notification></notification>
         </q-toolbar>
     </q-header>
     <q-page class="bg-deep-purple-1 q-pa-sm">
@@ -33,7 +34,8 @@ import {
 } from "vuex";
 export default {
     components: {
-        ItemComponent: () => import("components/lessonplan/ItemComponent.vue")
+        ItemComponent: () => import("components/lessonplan/ItemComponent.vue"),
+        Notification:()=>import("components/Notification/ItemComponent.vue")
     },
     data() {
         return {};

@@ -75,6 +75,9 @@ export default {
   computed: {
     ...mapState(["Setting", "Auth"])
   },
+  created(){
+    this.$store.dispatch("EchoNotification/initNotification");
+  },
   mounted() {},
   methods: {}
 };

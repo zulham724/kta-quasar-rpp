@@ -6,7 +6,7 @@
             <q-toolbar-title>
                 <div class="text-body2 text-deep-purple text-bold">Edit RPP</div>
             </q-toolbar-title>
-            <q-btn flat text-color="deep-purple" label="Perbarui" @click="onSubmit()" />
+            <q-btn flat text-color="deep-purple" :loading="loading"  label="Perbarui" @click="onSubmit()" />
         </q-toolbar>
     </q-header>
     <q-page-container class="bg-deep-purple-8">
@@ -110,6 +110,7 @@ export default {
     },
     data() {
         return {
+            loading:false,
               lessonplan: {
                 id:null,
                 lesson_plan_cover_id: null,
@@ -241,8 +242,9 @@ export default {
                             canvas_data: this.lessonplan.canvas_data.items,
                             image: this.lessonplan.lesson_plan_cover.image
                         });
+                        console.log(this.LessonPlanEditDraft.build.canvas_data)
                        
-                        this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.canvas_data.image}`);
+                        this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.lesson_plan_cover.image}`);
                         this.$refs.sampulMaker1.setItems(this.lessonplan.canvas_data.items);
                         this.$refs.sampulMaker1.initialize().then(res=>{
                             const imageData = res.toDataURL();
@@ -324,7 +326,7 @@ export default {
                     }).length;
 
                     if (length) {
-
+                        this.loading=true;
                         let items = [
                         {
                             text:this.LessonPlanEditDraft.build.topic,
@@ -364,17 +366,36 @@ export default {
                         this.lessonplan.canvas_data.items = items;
                         this.lessonplan.canvas_data.image = this.lessonplan.lesson_plan_cover.image;
 
-                        // this.$router.back();
-                        this.lessonplan.grade_id = this.lessonplan.grade.id;
-                        this.$store
-                            .dispatch("LessonPlan/update", this.lessonplan)
-                            .then(res => {
-                                this.$store.dispatch("Auth/getAuth");
-                                this.$q.notify("Berhasil");
-                            })
-                            .catch(err => {
-                                this.$q.notify("Terjadi kesalahan");
+                        this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.lesson_plan_cover.image}`);
+                        this.$refs.sampulMaker1.setItems(items)
+                        this.$refs.sampulMaker1.initialize().then(res => {
+                            const imageData = res.toDataURL();
+                            //console.log(imageData)
+                            this.lessonplan.canvas_image = imageData;
+                            this.$store.commit("LessonPlanEditDraft/setCanvasImage", {
+                                canvas_image: imageData
                             });
+                            this.lessonplan.grade_id = this.lessonplan.grade.id;
+                            this.$store
+                                .dispatch("LessonPlan/update", this.lessonplan)
+                                .then(res => {
+                                    this.$store.commit("LessonPlanEditDraft/resetBuild");
+                                    this.$store.dispatch("Auth/getAuth");
+                                    this.$q.notify("Berhasil");
+                                    this.$store.commit("LessonPlan/setLessonPlan", {lessonplan:res.data});
+                                    this.$router.push('/');
+                                    
+
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    this.$q.notify("Terjadi kesalahan");
+                                }).finally(res=>{
+                                    this.loading=false;
+                                });
+                        });
+                        //return 
+                     
                     }
                 }
             });

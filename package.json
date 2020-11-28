@@ -32,7 +32,9 @@
         "vuex-persist": "^2.2.0"
     },
     "devDependencies": {
-        "@quasar/app": "^1.0.0"
+        "@quasar/app": "^1.0.0",
+        "laravel-echo": "^1.9.0",
+        "pusher-js": "^7.0.2"
     },
     "engines": {
         "node": ">= 10.18.1",
