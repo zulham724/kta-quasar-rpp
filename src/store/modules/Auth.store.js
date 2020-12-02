@@ -122,7 +122,7 @@ const actions = {
     getAuth({ commit }) {
         return new Promise((resolve, reject) => {
             axios
-                .get(`${this.state.Setting.url}/api/user`)
+                .get(`${this.state.Setting.url}/api/user?exclude=post,events,books,guest_events,bookmark_post`)
                 .then(res => {
                     const auth = res.data;
                     const payload = {
