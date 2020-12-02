@@ -37,7 +37,7 @@
                 </div>
 
                 <div v-if="EchoNotification.items.data.length>0">
-                    <div v-for="(item, n) in computed_data" :key="n" style="background-color:#E0F2F1;border-bottom:0.5px solid #BDBDBD">
+                    <div v-for="(item, n) in computed_data" :key="n" style="border-bottom:0.5px solid #BDBDBD" class="bg-purple-1">
                           <q-intersection style="min-height:50px" v-if="item.type=='App\\Notifications\\CommentedLessonPlanNotification' || item.type=='CommentedLessonPlanEvent'">
                             <announcement-item-commented-lessonplan :item="item"></announcement-item-commented-lessonplan>
                         </q-intersection>
@@ -51,7 +51,7 @@
                 </div>
                 <template v-slot:loading>
                     <div class="row justify-center q-my-md">
-                        <q-spinner-dots color="teal" size="40px" />
+                        <q-spinner-dots color="deep-purple" size="40px" />
                     </div>
                 </template>
             </q-infinite-scroll>

@@ -13,7 +13,7 @@ const mutations = {
     state.items.data.splice(index, 1);
   },
   add(state, payload) {
-    state.items.data = [payload.item, ...state.items.data];
+    state.items.data = [{...payload.item}, ...state.items.data];
   },
   next(state, payload) {
     state.items = {

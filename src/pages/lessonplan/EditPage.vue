@@ -237,22 +237,37 @@ export default {
             if(!this.LessonPlanEditDraft.build.id){
                   this.$store.dispatch("LessonPlan/show", this.lessonplanid).then(res => {
                         this.lessonplan = res.data;
-                        this.lessonplan.canvas_data = JSON.parse(res.data.canvas_data);
-                        this.$store.commit("LessonPlanEditDraft/setCanvasData", {
-                            canvas_data: this.lessonplan.canvas_data.items,
-                            image: this.lessonplan.lesson_plan_cover.image
-                        });
-                        console.log(this.LessonPlanEditDraft.build.canvas_data)
-                       
-                        this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.lesson_plan_cover.image}`);
-                        this.$refs.sampulMaker1.setItems(this.lessonplan.canvas_data.items);
-                        this.$refs.sampulMaker1.initialize().then(res=>{
-                            const imageData = res.toDataURL();
-                            this.lessonplan.canvas_image = imageData;
-                            this.$store.commit("LessonPlanEditDraft/setCanvasImage", {
-                                canvas_image: imageData
+                        console.log('lnte')
+                        console.log(this.lessonplan.canvas_data)
+                        //perlu pengecekan karena data lessonPlan yang lama canvas_data nya masih kosong (NULL)
+                        if(res.data.canvas_data){
+                            // this.lessonplan.canvas_data = JSON.parse(res.data.canvas_data);
+                            this.$store.commit("LessonPlanEditDraft/setCanvasData", {
+                                canvas_data: this.lessonplan.canvas_data.items,
+                                image: this.lessonplan.lesson_plan_cover.image
                             });
-                        })
+                            this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.lesson_plan_cover.image}`);
+                            this.$refs.sampulMaker1.setItems(this.lessonplan.canvas_data.items);
+                            this.$refs.sampulMaker1.initialize().then(res=>{
+                                const imageData = res.toDataURL();
+                                this.lessonplan.canvas_image = imageData;
+                                this.$store.commit("LessonPlanEditDraft/setCanvasImage", {
+                                    canvas_image: imageData
+                                });
+                            });
+                        }
+                       
+                        //console.log(this.LessonPlanEditDraft.build.canvas_data)
+                       
+                        // this.$refs.sampulMaker1.setImage(`${this.Setting.storageUrl}/${this.lessonplan.lesson_plan_cover.image}`);
+                        // this.$refs.sampulMaker1.setItems(this.lessonplan.canvas_data.items);
+                        // this.$refs.sampulMaker1.initialize().then(res=>{
+                        //     const imageData = res.toDataURL();
+                        //     this.lessonplan.canvas_image = imageData;
+                        //     this.$store.commit("LessonPlanEditDraft/setCanvasImage", {
+                        //         canvas_image: imageData
+                        //     });
+                        // })
                         // console.log(this.lessonplan)
                     });
             }else if(this.LessonPlanEditDraft.build.id!=this.lessonplanid){

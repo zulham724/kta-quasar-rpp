@@ -286,22 +286,29 @@ export default {
                             items[i].color = item.color;
                             items[i].size = item.size;
                         });
-                        this.lessonplan.canvas_data.items = items;
-                        this.lessonplan.canvas_data.image = this.lessonplan.lesson_plan_cover.image;
 
+                        this.lessonplan.canvas_data ={
+                            items:items,
+                            image:this.lessonplan.lesson_plan_cover.image
+                        }
+                        //  return;
+
+
+                         
                         let image = `${this.Setting.storageUrl}/${this.LessonPlanDraft.build.lesson_plan_cover.image}`;
                         this.$refs.sampulMaker1.setImage(image);
                         this.$refs.sampulMaker1.setItems(items)
                         this.$refs.sampulMaker1.initialize().then(res => {
                             const imageData = this.$refs.sampulMaker1.toDataURL();
 
+                           
                             this.lessonplan.canvas_image = imageData;
                             this.$store.commit("LessonPlanDraft/setCanvasImage", {
                                  canvas_image: imageData
                             });
                             // alert(1)
-                            // return;
-
+                           
+                            
                             this.$router.push("/");
                             this.$store
                                 .dispatch("LessonPlan/store", this.lessonplan)

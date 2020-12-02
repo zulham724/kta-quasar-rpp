@@ -84,7 +84,7 @@
                         </div>
                         <q-btn flat round :color="lessonplan.liked_count ? 'red' : null" :icon="lessonplan.liked_count ? 'favorite' : 'favorite_border'" @click="lessonplan.liked_count ? dislike() : like()" />
 
-                        <q-btn @click="$router.push(`/lessonplan/${lessonplan.id}/review`)" icon="spellcheck" round flat v-if="
+                        <!--<q-btn @click="$router.push(`/lessonplan/${lessonplan.id}/review`)" icon="spellcheck" round flat v-if="
                   Auth.auth.profile.city_id
                     ? lessonplan.user.profile
                       ? (Auth.auth.profile.city_id ===
@@ -92,7 +92,7 @@
                         lessonplan.user.id == Auth.auth.id
                       : false
                     : false
-                "></q-btn>
+                "></q-btn>-->
                         <q-btn v-if="Auth.auth.role_id !== 7" flat round icon="message" @click="$router.push(`/lessonplan/${lessonplan.id}/comment`)" />
                     </div>
                 </div>
@@ -143,6 +143,15 @@ export default {
         },
         minHeight: function () {
             return this.$q.platform.is.mobile ? '80vw' : '30vw';
+        },
+        isObserverOrIsAuth:function(){
+            return this.Auth.auth.profile.city_id
+                    ? this.lessonplan.user.profile
+                      ? (this.Auth.auth.profile.city_id ===
+                          this.lessonplan.user.profile.city_id && this.Auth.auth.role_id == 7) ||
+                        this.lessonplan.user.id == this.Auth.auth.id
+                          : false
+                : false;
         }
     },
     data() {
@@ -282,13 +291,21 @@ export default {
                             id: "observer"
                         } :
                         false,
+                        this.isObserverOrIsAuth ? {
+                            label: "Lihat Saran",
+                            icon: "spellcheck",
+                            color: "deep-purple",
+                            id: "review"
+                        } :
+                        false,
                         this.lessonplan.user.id == this.Auth.auth.id ? {
                             label: "Hapus",
                             icon: "delete_outline",
                             color: "deep-purple",
                             id: "destroy"
                         } :
-                        false
+                        false,
+                      
                     ]
                 })
                 .onOk(action => {
@@ -304,6 +321,9 @@ export default {
                     }
                     if (action.id == "observer") {
                         this.$router.push(`/lessonplan/${this.lessonplan.id}/observer`);
+                    }
+                    if(action.id=="review"){
+                        this.$router.push(`/lessonplan/${this.lessonplan.id}/review`)
                     }
                 })
                 .onCancel(() => {

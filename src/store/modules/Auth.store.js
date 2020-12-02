@@ -54,7 +54,7 @@ const actions = {
                     axios.defaults.headers.common.Accept = "application/json";
                     axios.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
                     axios
-                        .get(`${this.state.Setting.url}/api/user`)
+                        .get(`${this.state.Setting.url}/api/user?exclude=post,events,books,guest_events,bookmark_post`)
                         .then(res => {
                             const auth = res.data;
                             // Add the following line:
