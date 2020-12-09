@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="full-width">
-      <q-img src="../statics/images/bg-login-1.png"></q-img>
+      <q-img src="../statics/images/bg-login-1.jpeg"></q-img>
     </div>
     <div class="full-height bg-deep-purple-8">
       <div
