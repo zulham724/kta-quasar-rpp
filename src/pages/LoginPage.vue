@@ -31,12 +31,16 @@
               outlined
               label="Password"
               v-model="credential.password"
-              type="password"
+              :type="show_password?'text':'password'"
               lazy-rules
               :rules="[
                 val => (val && val.length > 0) || 'Harus diisi'
               ]"
-            />
+            >
+            <template v-slot:append>
+                  <q-btn flat round color="deep-purple" :icon="show_password?'visibility':'visibility_off'" @click="show_password=!show_password" />
+            </template>
+            </q-input>
           </q-form>
         </div>
         <q-btn
@@ -60,7 +64,8 @@ export default {
   data() {
     return {
       credential: {},
-      loading: false
+      loading: false,
+      show_password:false,
     };
   },
   computed: {

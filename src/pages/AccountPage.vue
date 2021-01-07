@@ -95,7 +95,7 @@
                     <div class="q-pa-sm q-px-md">
                         <div class="row justify-between">
                             <div class="text-h6 q-ml-md">Buku RPP</div>
-                            <q-btn class="text-white q-px-sm" rounded dense style="background-color:#564395" @click="$router.push(`/MoreLessonPlans/${Auth.auth.id}`)">Lihat Semua</q-btn>
+                            <q-btn class="text-white q-px-sm" rounded dense style="background-color:#564395" @click="$router.push(`/user/lessonplanlist/${Auth.auth.id}/${Auth.auth.lesson_plans[0].id}`)">Lihat Semua</q-btn>
                         </div>
                     </div>
                     <div class="q-ml-xl q-mt-md">
