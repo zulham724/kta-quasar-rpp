@@ -187,10 +187,10 @@ const actions = {
         });
     });
   },
-  search({ commit }, key) {
+  search({ commit }, obj) {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${this.state.Setting.url}/api/v1/lessonplans/search/${key}`)
+        .get(`${this.state.Setting.url}/api/v1/lessonplans/search/${obj.search}/${obj.educational_level_id}`)
         .then(res => {
           resolve(res);
         })

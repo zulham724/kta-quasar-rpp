@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-body-2 text-deep-purple-9">Konten untuk Postingan ini</div>
-                                <q-input class="detail-input" dense placeholder="Konten untuk Postingan ini" color="deep-purple" v-model="lessonplan.description" :rules="[val => !!val || 'Harus diisi']" />
+                                <q-input class="detail-input" dense placeholder="Keterangan" color="deep-purple" v-model="lessonplan.description" :rules="[val => !!val || 'Harus diisi']" />
                             </div>
                         </div>
                         <div class="row">

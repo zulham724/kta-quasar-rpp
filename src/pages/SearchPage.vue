@@ -13,9 +13,15 @@
         </q-toolbar>
     </q-header>
     <q-page class="bg-deep-purple-1 q-pa-sm">
+        <div class="row">
+            <div class="col-12 q-mb-sm">
+              <q-select :loading="loading" @input="onSearch" option-value="id" option-label="name" v-model="model" :options="EducationalLevel.items" label="Pilih Jenjang" />
+
+            </div>
+        </div>
         <q-infinite-scroll @load="onLoad" :offset="250">
             <q-intersection v-for="lessonplan in lessonplans.data" :key="lessonplan.id" :style="
-            `min-height: 80vh`">
+            `min-height: 70vh`">
                 <item-component :isSelf="true" :lessonplan="lessonplan"></item-component>
             </q-intersection>
             <template v-slot:loading>
@@ -32,6 +38,9 @@
 import {
     debounce
 } from "quasar";
+import {
+    mapState
+} from "vuex";
 export default {
     components: {
         ItemComponent: () => import("components/lessonplan/ItemComponent.vue")
@@ -40,8 +49,22 @@ export default {
         return {
             search: "",
             loading: false,
-            lessonplans: {}
+            lessonplans: {},
+            model:null,
+           
         };
+    },
+    computed: {
+        ...mapState(["EducationalLevel","Auth"])
+    },
+    created(){
+        //get auth educationallevel
+        this.model = {id:this.Auth.auth.profile.educational_level_id, name:this.Auth.auth.profile.educational_level.name};
+
+        //cek items educationallevel modul
+        if(this.EducationalLevel.items.length==0){
+            this.$store.dispatch("EducationalLevel/index");
+        }
     },
     mounted() {
         this.onSearch = debounce(this.onSearch, 1000);
@@ -51,7 +74,7 @@ export default {
             if (this.search.length != 0) {
                 this.loading = true;
                 this.$store
-                    .dispatch("LessonPlan/search", this.search)
+                    .dispatch("LessonPlan/search", {search:this.search, educational_level_id:this.model.id})
                     .then(res => {
                         this.lessonplans = res.data;
                     })

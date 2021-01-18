@@ -34,7 +34,8 @@ const checkprofile = (to, from, next) => {
         // klo kosong harus isi atau klo pengawas lewat aja
         next();
     } else {
-        next("/editprofile");
+        Notify.create('Isi jenjang terlebih dahulu');
+        next("/account/edit");
     }
 };
 
@@ -55,7 +56,7 @@ const isTrial = (from, to, next) => {
 
 const routes = [{
         path: "",
-        beforeEnter: multiguard([auth, isTrial]),
+        beforeEnter: multiguard([auth, isTrial, checkprofile]),
         component: () =>
             import ("layouts/MainLayout.vue"),
         children: [
