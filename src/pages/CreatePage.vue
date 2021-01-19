@@ -41,19 +41,19 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-body-2 text-deep-purple-9">Mata Pelajaran</div>
-                                <q-input dense placeholder="Mata Pelajaran" color="deep-purple" v-model="lessonplan.subject" :rules="[val => !!val || 'Harus diisi']" />
+                                <q-input dense placeholder="Keterangan" color="deep-purple" v-model="lessonplan.subject" :rules="[val => !!val || 'Harus diisi']" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-body-2 text-deep-purple-9">Materi Pokok</div>
-                                <q-input dense placeholder="Materi Pokok" color="deep-purple" v-model="lessonplan.topic" :rules="[val => !!val || 'Harus diisi']" />
+                                <q-input dense placeholder="Keterangan" color="deep-purple" v-model="lessonplan.topic" :rules="[val => !!val || 'Harus diisi']" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-body-2 text-deep-purple-9">Kelas</div>
-                                <q-select dense placeholder="Kelas" color="deep-purple" v-model="lessonplan.grade_id" :options="Grade.items" option-value="id" option-label="description" emit-value :rules="[val => !!val || 'Harus diisi']">
+                                <q-select label="Pilih Kelas" dense placeholder="Pilih Kelas" color="deep-purple" v-model="lessonplan.grade_id" :options="Grade.items" option-value="id" option-label="description" emit-value :rules="[val => !!val || 'Harus diisi']">
                                     <template v-slot:selected v-if="lessonplan.grade_id">
                                         <div>{{Grade.items.find(item=>item.id == lessonplan.grade_id).description}}</div>
                                     </template>
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-body-2 text-deep-purple-9">Durasi</div>
-                                <q-input dense placeholder="Durasi" color="deep-purple" v-model="lessonplan.duration" :rules="[val => !!val || 'Harus diisi']" />
+                                <q-input dense placeholder="Keterangan" color="deep-purple" v-model="lessonplan.duration" :rules="[val => !!val || 'Harus diisi']" />
                             </div>
                         </div>
                     </div>  

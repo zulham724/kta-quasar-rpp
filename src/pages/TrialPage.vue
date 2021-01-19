@@ -1,7 +1,6 @@
 <template>
   <q-layout view="hHr lpR fFr">
-    <q-header elevated>
-      <q-toolbar class="bg-white">
+   <q-toolbar class="bg-white">
         <q-icon name="home" color="deep-purple" size="sm" />
         <q-toolbar-title>
           <div class="text-body2 text-deep-purple text-bold">Home</div>
@@ -9,7 +8,6 @@
         <q-btn round flat icon="help_outline" color="deep-purple" @click="$router.push('/information')" />
         <q-btn color="deep-purple" flat dense icon="exit_to_app" @click="onLogout" />
       </q-toolbar>
-    </q-header>
     <q-page-container>
       <q-pull-to-refresh @refresh="onRefresh" color="deep-purple">
         <q-infinite-scroll @load="onLoad" :offset="250">

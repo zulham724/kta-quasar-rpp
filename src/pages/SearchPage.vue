@@ -60,7 +60,7 @@ export default {
     created(){
         //get auth educationallevel
         this.model = {id:this.Auth.auth.profile.educational_level_id, name:this.Auth.auth.profile.educational_level.name};
-
+        this.onSearch();
         //cek items educationallevel modul
         if(this.EducationalLevel.items.length==0){
             this.$store.dispatch("EducationalLevel/index");
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         onSearch() {
-            if (this.search.length != 0) {
+            if (this.search!=null) {
                 this.loading = true;
                 this.$store
                     .dispatch("LessonPlan/search", {search:this.search, educational_level_id:this.model.id})

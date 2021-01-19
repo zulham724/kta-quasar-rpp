@@ -189,8 +189,12 @@ const actions = {
   },
   search({ commit }, obj) {
     return new Promise((resolve, reject) => {
+      const params = {
+        key:obj.search,
+        educational_level_id:obj.educational_level_id
+      }
       axios
-        .get(`${this.state.Setting.url}/api/v1/lessonplans/search/${obj.search}/${obj.educational_level_id}`)
+        .get(`${this.state.Setting.url}/api/v1/lessonplans/search`, {params:params})
         .then(res => {
           resolve(res);
         })
