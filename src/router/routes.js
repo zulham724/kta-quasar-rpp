@@ -150,6 +150,12 @@ const routes = [{
             import ("pages/TrialPage.vue")
     },
     {
+        path: "/payment",
+        name: "payment",
+        component: () =>
+            import ("pages/PaymentPage.vue")
+    },
+    {
         path: "/lessonplan/:lessonplanid/edit",
         beforeEnter: multiguard([auth, isTrial]),
         name: "lessonplanedit",

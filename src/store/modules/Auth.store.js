@@ -104,7 +104,7 @@ const actions = {
                 });
         });
     },
-    logout({ commit }) {
+    logout({ commit, state }) {
         return new Promise((resolve, reject) => {
             const user_id=state.auth.id;
             const channel='notification.'+user_id;
@@ -164,6 +164,24 @@ const actions = {
                     reject(err);
                 });
         });
+    },
+    getPaymentStatus(){
+        return new Promise((resolve, reject) => {
+            
+            axios
+                 .get(`${this.state.Setting.url}/api/v1/payments/getstatus/${this.state.Auth.auth.id}`)
+                 .then(res => {
+                    //  const auth = res.data;
+                    //  const payload = {
+                    //      auth: auth
+                    //  };
+                    //  commit("setAuth", payload);
+                     resolve(res);
+                 })
+                 .catch(err => {
+                     reject(err);
+                 });
+         });
     }
 };
 

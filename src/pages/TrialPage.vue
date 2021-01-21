@@ -1,5 +1,6 @@
 <template>
-  <q-layout view="hHr lpR fFr">
+  <q-layout view="hHr lpR fFr" >
+    <div>
    <q-toolbar class="bg-white">
         <q-icon name="home" color="deep-purple" size="sm" />
         <q-toolbar-title>
@@ -9,7 +10,9 @@
         <q-btn color="deep-purple" flat dense icon="exit_to_app" @click="onLogout" />
       </q-toolbar>
     <q-page-container>
+   
       <q-pull-to-refresh @refresh="onRefresh" color="deep-purple">
+        
         <q-infinite-scroll @load="onLoad" :offset="250">
           <q-intersection
             v-for="lessonplan in LessonPlan.items.data"
@@ -25,8 +28,15 @@
             </div>
           </template>
         </q-infinite-scroll>
+
       </q-pull-to-refresh>
+
+  
+   <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn @click="$router.push('/payment')" fab color="accent" >Lakukan Pembayaran</q-btn>
+          </q-page-sticky>
     </q-page-container>
+    </div>
   </q-layout>
 </template>
 
