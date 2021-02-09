@@ -18,7 +18,7 @@
             v-for="lessonplan in LessonPlan.items.data"
             :key="lessonplan.id"
             :style="
-            `min-height: 70vh;width: 100vw`"
+            `min-height: 70vh`"
           >
             <item-component :lessonplan="{...lessonplan}"></item-component>
           </q-intersection>
